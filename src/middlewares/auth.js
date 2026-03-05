@@ -10,11 +10,10 @@ const userAuth = async (req, res, next) => {
       return res.status(401).send("Invalid Token.Please Login");
     }
     //Validate the token
-    const decodedObj = jwt.verify(token, "DEV@Social$2025", {
+    const decodedObj = jwt.verify(token, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     const { _id } = decodedObj;
-    console.log(decodedObj);
     //Find the user
     const user = await User.findById(_id);
     if (!user) {
